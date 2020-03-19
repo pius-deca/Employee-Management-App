@@ -20,7 +20,7 @@ public class EmployeeService {
     public void getEmployeeByEmailId(String emailId){
         Employee employee = employeeRepository.findByEmailId(emailId);
         if (employee != null) {
-            throw new AlreadyExistsException("Sorry, Employee already exists");
+            throw new AlreadyExistsException("Sorry, Employee with emailId of : "+emailId+" already exists");
         }
     }
 
