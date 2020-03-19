@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.exception.EmployeeAlreadyExistsException;
 import com.example.demo.exception.EmployeeNotFoundException;
 import com.example.demo.model.Employee;
 import com.example.demo.repository.EmployeeRepository;
@@ -16,7 +17,15 @@ public class EmployeeService {
     @Autowired
     private SequenceGeneratorService sequenceGeneratorService;
 
+    public void getEmployeeByEmailId(String emailId){
+        Employee employee = employeeRepository.findByEmailId(emailId);
+        if (employee != null) {
+            throw new EmployeeAlreadyExistsException("Sorry, Employee already exists");
+        }
+    }
+
     public Employee create(Employee employee){
+        getEmployeeByEmailId(employee.getEmailId());
         employee.setId(sequenceGeneratorService.generateSequence(Employee.SEQUENCE_NAME));
         return employeeRepository.save(employee);
     }

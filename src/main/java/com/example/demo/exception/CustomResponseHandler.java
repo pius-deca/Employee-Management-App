@@ -17,4 +17,10 @@ public class CustomResponseHandler extends ResponseEntityExceptionHandler {
         EmployeeNotFoundExceptionResponse exceptionResponse = new EmployeeNotFoundExceptionResponse(ex.getMessage());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleEmployeeAlreadyExistsException(EmployeeAlreadyExistsException ex, WebRequest request){
+        EmployeeAlreadyExistsExceptionResponse exceptionResponse = new EmployeeAlreadyExistsExceptionResponse(ex.getMessage());
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
 }
