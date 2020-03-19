@@ -30,7 +30,18 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public Employee getById(Long employeeId) throws Exception {
+    public Employee update(Employee updateEmployee, Long employeeId){
+        Employee employee = employeeRepository.findById(employeeId).orElse(null);
+        if (employee != null){
+            employee.setFirstName(updateEmployee.getFirstName());
+            employee.setLastName(updateEmployee.getLastName());
+            employee.setEmailId(updateEmployee.getEmailId());
+            return employeeRepository.save(employee);
+        }
+        throw  new EmployeeNotFoundException("Employee not found");
+    }
+
+    public Employee getById(Long employeeId){
         Employee employee = employeeRepository.findById(employeeId).orElse(null);
         if(employee == null){
             throw new EmployeeNotFoundException("Employee not found");
@@ -40,5 +51,9 @@ public class EmployeeService {
 
     public List<Employee> getAll(){
         return employeeRepository.findAll();
+    }
+
+    public void delete(Long employeeId){
+        employeeRepository.delete(getById(employeeId));
     }
 }

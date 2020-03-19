@@ -18,12 +18,6 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
-
-    @Autowired
-    private SequenceGeneratorService sequenceGeneratorService;
-
     @PostMapping("/employees")
     public Employee createEmployee(@Valid @RequestBody Employee employee){
         return employeeService.create(employee);
@@ -35,9 +29,16 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees/{id}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") Long employeeId) throws Exception {
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") Long employeeId){
         Employee employee = employeeService.getById(employeeId);
         return ResponseEntity.ok().body(employee);
     }
+
+    @DeleteMapping("/employees/{id}")
+    public ResponseEntity<?> deleteEmployee(@PathVariable(value = "id") Long employeeId){
+        employeeService.delete(employeeId);
+        return ResponseEntity.ok().body("Employee deleted successfully");
+    }
+
 
 }
