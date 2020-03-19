@@ -40,5 +40,9 @@ public class EmployeeController {
         return ResponseEntity.ok().body("Employee deleted successfully");
     }
 
+    @PatchMapping("/employees/{id}")
+    public Employee updateEmployee(@Valid @RequestBody Employee employee, @PathVariable(value = "id") Long employeeId){
+        return employeeService.update(employee, employeeId);
+    }
 
 }

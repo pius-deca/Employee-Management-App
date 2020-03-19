@@ -38,7 +38,7 @@ public class EmployeeService {
             employee.setEmailId(updateEmployee.getEmailId());
             return employeeRepository.save(employee);
         }
-        throw  new EmployeeNotFoundException("Employee not found");
+        throw new EmployeeNotFoundException("Employee not found");
     }
 
     public Employee getById(Long employeeId){
