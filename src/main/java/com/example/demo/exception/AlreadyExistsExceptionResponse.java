@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class EmployeeAlreadyExistsExceptionResponse {
+public class AlreadyExistsExceptionResponse {
     private String message;
 }

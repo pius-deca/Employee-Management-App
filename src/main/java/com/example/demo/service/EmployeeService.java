@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.exception.EmployeeAlreadyExistsException;
-import com.example.demo.exception.EmployeeNotFoundException;
+import com.example.demo.exception.AlreadyExistsException;
+import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.Employee;
 import com.example.demo.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class EmployeeService {
     public void getEmployeeByEmailId(String emailId){
         Employee employee = employeeRepository.findByEmailId(emailId);
         if (employee != null) {
-            throw new EmployeeAlreadyExistsException("Sorry, Employee already exists");
+            throw new AlreadyExistsException("Sorry, Employee already exists");
         }
     }
 
@@ -38,13 +38,13 @@ public class EmployeeService {
             employee.setEmailId(updateEmployee.getEmailId());
             return employeeRepository.save(employee);
         }
-        throw new EmployeeNotFoundException("Employee not found");
+        throw new NotFoundException("Employee not found");
     }
 
     public Employee getById(Long employeeId){
         Employee employee = employeeRepository.findById(employeeId).orElse(null);
         if(employee == null){
-            throw new EmployeeNotFoundException("Employee not found");
+            throw new NotFoundException("Employee not found");
         }
         return employee;
     }

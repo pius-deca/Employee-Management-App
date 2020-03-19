@@ -12,35 +12,35 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/employees")
 public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
 
-    @PostMapping("/employees")
+    @PostMapping
     public Employee createEmployee(@Valid @RequestBody Employee employee){
         return employeeService.create(employee);
     }
 
-    @GetMapping("/employees")
+    @GetMapping("/all")
     public List<Employee> getAllEmployees(){
         return employeeService.getAll();
     }
 
-    @GetMapping("/employees/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") Long employeeId){
         Employee employee = employeeService.getById(employeeId);
         return ResponseEntity.ok().body(employee);
     }
 
-    @DeleteMapping("/employees/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteEmployee(@PathVariable(value = "id") Long employeeId){
         employeeService.delete(employeeId);
         return ResponseEntity.ok().body("Employee deleted successfully");
     }
 
-    @PatchMapping("/employees/{id}")
+    @PatchMapping("/{id}")
     public Employee updateEmployee(@Valid @RequestBody Employee employee, @PathVariable(value = "id") Long employeeId){
         return employeeService.update(employee, employeeId);
     }
