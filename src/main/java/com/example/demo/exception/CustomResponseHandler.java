@@ -23,4 +23,5 @@ public class CustomResponseHandler extends ResponseEntityExceptionHandler {
         AlreadyExistsExceptionResponse exceptionResponse = new AlreadyExistsExceptionResponse(ex.getMessage());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
+
 }
