@@ -7,6 +7,8 @@ import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -35,5 +37,13 @@ public class UserService {
             throw new NotFoundException("User not found");
         }
         return user;
+    }
+
+    public List<User> getAll(){
+        return userRepository.findAll();
+    }
+
+    public void delete(Long userId){
+        userRepository.delete(getById(userId));
     }
 }
