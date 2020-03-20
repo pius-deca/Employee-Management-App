@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class EmployeeNotFoundExceptionResponse {
+public class NotFoundExceptionResponse {
     private String message;
 
 }

@@ -13,14 +13,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class CustomResponseHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
-    public final ResponseEntity<Object> handleEmployeeNotFoundException(EmployeeNotFoundException ex, WebRequest request){
-        EmployeeNotFoundExceptionResponse exceptionResponse = new EmployeeNotFoundExceptionResponse(ex.getMessage());
+    public final ResponseEntity<Object> handleEmployeeNotFoundException(NotFoundException ex, WebRequest request){
+        NotFoundExceptionResponse exceptionResponse = new NotFoundExceptionResponse(ex.getMessage());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    public final ResponseEntity<Object> handleEmployeeAlreadyExistsException(EmployeeAlreadyExistsException ex, WebRequest request){
-        EmployeeAlreadyExistsExceptionResponse exceptionResponse = new EmployeeAlreadyExistsExceptionResponse(ex.getMessage());
+    public final ResponseEntity<Object> handleEmployeeAlreadyExistsException(AlreadyExistsException ex, WebRequest request){
+        AlreadyExistsExceptionResponse exceptionResponse = new AlreadyExistsExceptionResponse(ex.getMessage());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 }
