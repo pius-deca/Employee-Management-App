@@ -6,7 +6,9 @@ import com.example.demo.model.Employee;
 import com.example.demo.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Service
@@ -31,14 +33,11 @@ public class EmployeeService {
     }
 
     public Employee update(Employee updateEmployee, Long employeeId){
-        Employee employee = employeeRepository.findById(employeeId).orElse(null);
-        if (employee != null){
-            employee.setFirstName(updateEmployee.getFirstName());
-            employee.setLastName(updateEmployee.getLastName());
-            employee.setEmailId(updateEmployee.getEmailId());
-            return employeeRepository.save(employee);
-        }
-        throw new NotFoundException("Employee not found");
+        Employee employee = getById(employeeId);
+        employee.setFirstName(updateEmployee.getFirstName());
+        employee.setLastName(updateEmployee.getLastName());
+        employee.setEmailId(updateEmployee.getEmailId());
+        return employeeRepository.save(employee);
     }
 
     public Employee getById(Long employeeId){

@@ -36,7 +36,17 @@ public class UserService {
         if (user == null){
             throw new NotFoundException("User not found");
         }
+        System.out.println(user.toString());
         return user;
+    }
+
+    public User update(User updateUser, Long userId){
+        User user = getById(userId);
+        user.setFirstName(updateUser.getFirstName());
+        user.setLastName(updateUser.getLastName());
+        user.setUsername(updateUser.getUsername());
+        user.setPassword(updateUser.getPassword());
+        return userRepository.save(user);
     }
 
     public List<User> getAll(){

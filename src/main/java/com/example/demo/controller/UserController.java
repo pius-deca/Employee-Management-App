@@ -44,6 +44,16 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updateUser(@Valid @RequestBody User userToUpdate, @PathVariable(value = "id") Long userId, BindingResult result){
+        ResponseEntity<?> error = mapValidationErrorService.MapValidationError(result);
+        if (error != null) {
+            return error;
+        }
+        User updatedUser = userService.update(userToUpdate, userId);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Long userId){
         userService.delete(userId);
