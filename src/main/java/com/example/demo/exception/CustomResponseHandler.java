@@ -24,4 +24,10 @@ public class CustomResponseHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleEmailNotVerifiedException(EmailNotVerifiedException ex, WebRequest request){
+        EmailNotVerifiedExceptionResponse exceptionResponse = new EmailNotVerifiedExceptionResponse(ex.getMessage());
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
 }
