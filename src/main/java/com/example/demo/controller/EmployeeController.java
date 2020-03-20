@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -25,39 +26,39 @@ public class EmployeeController {
     private MapValidationErrorService mapValidationErrorService;
 
     @PostMapping
-    public ResponseEntity<?> createEmployee(@Valid @RequestBody Employee employee, BindingResult result){
+    public ResponseEntity<?> createEmployee(@Valid @RequestBody Employee employee, BindingResult result, Principal principal){
         ResponseEntity<?> error = mapValidationErrorService.MapValidationError(result);
         if (error != null) {
             return error;
         }
-        Employee createdEmployee =  employeeService.create(employee);
+        Employee createdEmployee =  employeeService.create(employee, principal.getName());
         return new ResponseEntity<>(createdEmployee, HttpStatus.CREATED);
     }
 
     @GetMapping("/all")
-    public List<Employee> getAllEmployees(){
-        return employeeService.getAll();
+    public List<Employee> getAllEmployees(Principal principal){
+        return employeeService.getAll(principal.getName());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") Long employeeId){
-        Employee employee = employeeService.getById(employeeId);
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") Long employeeId, Principal principal){
+        Employee employee = employeeService.getById(employeeId, principal.getName());
         return ResponseEntity.ok().body(employee);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteEmployee(@PathVariable(value = "id") Long employeeId){
-        employeeService.delete(employeeId);
+    public ResponseEntity<?> deleteEmployee(@PathVariable(value = "id") Long employeeId, Principal principal){
+        employeeService.delete(employeeId, principal.getName());
         return ResponseEntity.ok().body("Employee deleted successfully");
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> updateEmployee(@Valid @RequestBody Employee employee, @PathVariable(value = "id") Long employeeId, BindingResult result){
+    public ResponseEntity<?> updateEmployee(@Valid @RequestBody Employee employee, @PathVariable(value = "id") Long employeeId, BindingResult result, Principal principal){
         ResponseEntity<?> error = mapValidationErrorService.MapValidationError(result);
         if (error != null){
             return error;
         }
-        Employee updatedEmployee = employeeService.update(employee, employeeId);
+        Employee updatedEmployee = employeeService.update(employee, employeeId, principal.getName());
         return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
     }
 

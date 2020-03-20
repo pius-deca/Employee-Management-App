@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.User;
+import com.example.demo.payload.LoginRequest;
 import com.example.demo.service.MapValidationErrorService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class UserController {
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<?> createUser(@Valid @RequestBody User user, BindingResult result){
         ResponseEntity<?> error = mapValidationErrorService.MapValidationError(result);
         if (error != null) {
@@ -30,6 +31,22 @@ public class UserController {
         }
         User createdUser = userService.create(user);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult result){
+        ResponseEntity<?> error = mapValidationErrorService.MapValidationError(result);
+        if (error != null) {
+            return error;
+        }
+        ResponseEntity<?> loggedUser = userService.login(loginRequest);
+        return new ResponseEntity<>(loggedUser, HttpStatus.OK);
+    }
+
+    @PostMapping("/verifyEmail/{token}")
+    public ResponseEntity<?> verifyUser(@PathVariable String token){
+        User user = userService.verifyEmail(token);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -42,6 +59,16 @@ public class UserController {
     public ResponseEntity<List<User>> getAllUsers(){
         List<User> users = userService.getAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updateUser(@Valid @RequestBody User userToUpdate, @PathVariable(value = "id") Long userId, BindingResult result){
+        ResponseEntity<?> error = mapValidationErrorService.MapValidationError(result);
+        if (error != null) {
+            return error;
+        }
+        User updatedUser = userService.update(userToUpdate, userId);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
