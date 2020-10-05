@@ -58,6 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .headers().frameOptions().sameOrigin()
                 .and().authorizeRequests().antMatchers("/users/**").permitAll()
+                .and().authorizeRequests().antMatchers("/").permitAll()
                 .antMatchers(
                         "/",
                         "/favicon.ico",
