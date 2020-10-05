@@ -23,6 +23,11 @@ public class UserController {
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
+    @GetMapping("")
+    public String hello(){
+        return "Hello Aremeiye Ebi";
+    }
+
     @PostMapping("/register")
     public ResponseEntity<?> createUser(@Valid @RequestBody User user, BindingResult result){
         ResponseEntity<?> error = mapValidationErrorService.MapValidationError(result);

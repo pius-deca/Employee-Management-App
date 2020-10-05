@@ -45,11 +45,12 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public void getByUsername(String username){
+    public User getByUsername(String username){
         Optional<User> user = userRepository.findByUsername(username);
         if (user.isPresent()){
             throw new AlreadyExistsException("User with username of : " + username + " already exists");
         }
+        return null;
     }
 
     public User create(User newUser){
